@@ -38,8 +38,7 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	// TODO
 	token := "token"
 	resp = &user.LoginResp{
-		UserId: int32(row.ID),
-		Token:  token,
+		Token: token,
 	}
 	return resp, nil
 }

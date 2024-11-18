@@ -25,6 +25,5 @@ message LoginReq {
 }
 
 message LoginResp {
-  int32 user_id = 1;
-  string token = 2;
+  string token = 1;
 }
