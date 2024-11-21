@@ -11,7 +11,7 @@ require (
 	github.com/cloudwego/kitex v0.11.3
 	github.com/hourhl/Qmall/rpc_gen v0.0.0-00010101000000-000000000000
 	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241108060226-a2d88c8d88e9
-	github.com/kitex-contrib/registry-consul v0.0.0-20240508100819-2905e45155c1
+	github.com/kitex-contrib/registry-consul v0.1.0
 	github.com/kr/pretty v0.3.1
 	github.com/redis/go-redis/v9 v9.7.0
 	go.uber.org/zap v1.27.0
@@ -49,7 +49,7 @@ require (
 	github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8 // indirect
 	github.com/hashicorp/consul/api v1.20.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
-	github.com/hashicorp/go-hclog v1.3.1 // indirect
+	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-immutable-radix v1.0.0 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect

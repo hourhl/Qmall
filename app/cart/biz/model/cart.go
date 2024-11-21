@@ -34,7 +34,7 @@ func AddItem(ctx context.Context, db *gorm.DB, c *Cart) error {
 			UpdateColumn("qty", gorm.Expr("qty+?", c.Qty)).Error
 	}
 
-	return db.WithContext(ctx).Create(c).Error
+	return db.WithContext(ctx).Model(&Cart{}).Create(c).Error
 }
 
 func EmptyCart(ctx context.Context, db *gorm.DB, userId uint32) error {
