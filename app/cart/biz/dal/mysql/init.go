@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"fmt"
+	"github.com/hourhl/Qmall/app/cart/biz/model"
 	"github.com/hourhl/Qmall/app/cart/conf"
 	"os"
 
@@ -22,6 +23,8 @@ func Init() {
 			SkipDefaultTransaction: true,
 		},
 	)
+
+	DB.AutoMigrate(&model.Cart{})
 	if err != nil {
 		panic(err)
 	}

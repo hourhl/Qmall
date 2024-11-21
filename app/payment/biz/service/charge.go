@@ -5,8 +5,11 @@ import (
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	creditcard "github.com/durango/go-credit-card"
 	"github.com/google/uuid"
+	"github.com/hourhl/Qmall/app/payment/biz/dal/mysql"
+	"github.com/hourhl/Qmall/app/payment/biz/model"
 	payment "github.com/hourhl/Qmall/rpc_gen/kitex_gen/payment"
 	"strconv"
+	"time"
 )
 
 type ChargeService struct {
@@ -35,5 +38,16 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(5005001, err.Error())
 	}
-	return
+
+	err = model.CreatePaymentLog(s.ctx, mysql.DB, &model.PaymentLog{
+		UserId:        req.UserId,
+		OrderId:       req.OrderId,
+		TransactionId: transactionId.String(),
+		Amout:         req.Amount,
+		PayAt:         time.Now(),
+	})
+	if err != nil {
+		return nil, kerrors.NewGRPCBizStatusError(5005002, err.Error())
+	}
+	return &payment.ChargeResp{TransactionId: transactionId.String()}, nil
 }
