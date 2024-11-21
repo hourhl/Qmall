@@ -13,7 +13,7 @@ service CheckoutService {
 message Address {
   string street_address = 1;
   string city = 2;
-  string state = 3;
+  string province = 3;
   string country = 4;
   string zip_code = 5;
 }

@@ -1,0 +1,13 @@
+Module index :
+    auth - 1
+    user - 2
+    product - 3
+    cart - 4
+    payment - 5
+
+Todo list:
+1. 单元测试register时，不修改mysql路径的读取方式为直接读取，尝试读取配置文件
+2. 重构所有service的error的错误码和输出信息
+3. 重构所有数据库操作语句，加上ctx
+
+
