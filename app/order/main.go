@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/hourhl/Qmall/app/order/biz/dal"
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
 	"log"
@@ -15,7 +14,6 @@ import (
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order/orderservice"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func main() {
