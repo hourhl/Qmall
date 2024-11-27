@@ -7,6 +7,7 @@ import (
 	"github.com/cloudwego/kitex/transport"
 	"github.com/hourhl/Qmall/app/checkout/conf"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/cart/cartservice"
+	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order/orderservice"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/payment/paymentservice"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/product/productcatalogservice"
 	consul "github.com/kitex-contrib/registry-consul"
@@ -17,6 +18,7 @@ var (
 	PaymentClient paymentservice.Client
 	CartClient    cartservice.Client
 	ProductClient productcatalogservice.Client
+	OrderClient   orderservice.Client
 	once          sync.Once
 	err           error
 )
@@ -26,6 +28,7 @@ func Init() {
 		InitPaymentClient()
 		InitProductClient()
 		InitCartClient()
+		InitOrderClient()
 	})
 }
 
@@ -84,6 +87,26 @@ func InitProductClient() {
 	)
 
 	ProductClient, err = productcatalogservice.NewClient("product", opts...)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func InitOrderClient() {
+	var opts []client.Option
+	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	if err != nil {
+		panic(err)
+	}
+
+	opts = append(opts, client.WithResolver(r))
+	opts = append(opts,
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+		client.WithTransportProtocol(transport.GRPC),
+		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	)
+
+	OrderClient, err = orderservice.NewClient("order", opts...)
 	if err != nil {
 		panic(err)
 	}
