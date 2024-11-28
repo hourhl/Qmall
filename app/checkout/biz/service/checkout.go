@@ -4,12 +4,13 @@ import (
 	"context"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/google/uuid"
 	"github.com/hourhl/Qmall/app/checkout/infra/rpc"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/hourhl/Qmall/rpc_gen/kitex_gen/checkout"
+	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/payment"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/product"
+	"strconv"
 )
 
 type CheckoutService struct {
@@ -33,6 +34,7 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	}
 
 	var total float32
+	var oi []*order.OrderItem
 	// TODO
 	// 应该在for循环外面进行rpc调用，否则性能不太好
 	for _, cartItem := range cartResult.Cart.Items {
@@ -45,12 +47,36 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		}
 
 		p := productResp.Product.Price
-		total += p * float32(cartItem.Quantity)
+		cost := p * float32(cartItem.Quantity)
+		total += cost
+		oi = append(oi, &order.OrderItem{
+			Item: &cart.CartItem{ProductId: cartItem.ProductId, Quantity: cartItem.Quantity},
+			Cost: cost,
+		})
 	}
 
 	var orderId string
-	u, _ := uuid.NewRandom()
-	orderId = u.String()
+	zipInt, _ := strconv.Atoi(req.Address.ZipCode)
+	orderResp, err := rpc.OrderClient.PlaceOrder(s.ctx, &order.PlaceOrderReq{
+		UserId: req.UserId,
+		Email:  req.Email,
+		Address: &order.Address{
+			Street:   req.Address.StreetAddress,
+			City:     req.Address.City,
+			Province: req.Address.Province,
+			Country:  req.Address.Country,
+			ZipCode:  int32(zipInt),
+		},
+		OrderItems: oi,
+	})
+
+	if err != nil {
+		return nil, kerrors.NewGRPCBizStatusError(6004001, err.Error())
+	}
+
+	if orderResp != nil && orderResp.Order != nil {
+		orderId = orderResp.Order.OrderId
+	}
 
 	payReq := &payment.ChargeReq{
 		UserId:  req.UserId,
