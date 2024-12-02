@@ -5,6 +5,8 @@ import (
 	"errors"
 	"github.com/hourhl/Qmall/app/user/biz/dal/mysql"
 	"github.com/hourhl/Qmall/app/user/biz/model"
+	"github.com/hourhl/Qmall/app/user/infra/rpc"
+	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth"
 	user "github.com/hourhl/Qmall/rpc_gen/kitex_gen/user"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -35,10 +37,9 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	}
 
 	// 3. authorization
-	// TODO
-	token := "token"
+	token, _ := rpc.AuthClient.DeliverTokenByRPC(s.ctx, &auth.DeliverTokenReq{UserId: int32(row.ID)})
 	resp = &user.LoginResp{
-		Token: token,
+		Token: token.Token,
 	}
 	return resp, nil
 }

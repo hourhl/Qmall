@@ -13,5 +13,6 @@ Todo list:
 3. 重构所有数据库操作语句，加上ctx
 4. 检查所有的数据库自动迁移
 5. 检查env的环境信息是否是online
+6. 进一步优化auth模块：token放入redis中并设置过期时间
 
 

@@ -1,20 +1,22 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"net"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
-	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hourhl/Qmall/app/auth/conf"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth/authservice"
+	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func main() {
+	_ = godotenv.Load()
 	opts := kitexInit()
 
 	svr := authservice.NewServer(new(AuthServiceImpl), opts...)
