@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"testing"
 	auth "github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth"
+	"testing"
 )
 
 func TestVerifyTokenByRPC_Run(t *testing.T) {
@@ -11,11 +11,21 @@ func TestVerifyTokenByRPC_Run(t *testing.T) {
 	s := NewVerifyTokenByRPCService(ctx)
 	// init req and assert value
 
-	req := &auth.VerifyTokenReq{}
+	// right token
+	req := &auth.VerifyTokenReq{
+		Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzM2ODkwMywiaWF0IjoxNzMzMzY4OTAzfQ.oYM-5_RONxu4BYEGcngEUDIEw-SjbTEnaz_4i2kIhFs",
+	}
 	resp, err := s.Run(req)
-	t.Logf("err: %v", err)
-	t.Logf("resp: %v", resp)
+	t.Logf("err:%v", err)
+	t.Logf("resp:%v", resp)
 
-	// todo: edit your unit test
+	// wrong token
+	req = &auth.VerifyTokenReq{
+		Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhobCIsIm5iZiI6MTczMzM2ODkwMywiaWF0IjoxNzMzMzY4OTAzfQ.n6MCk1Znjfio8AhZu7e2vZxqmmci9Ey8rXTzC-C3Hxw",
+	}
+	resp, err = s.Run(req)
+	t.Logf("err:%v", err)
+	t.Logf("resp:%v", resp)
 
+	// status : PASS
 }

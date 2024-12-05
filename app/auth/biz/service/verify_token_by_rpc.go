@@ -23,7 +23,7 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 	// Finish your business logic.
 
 	tokenString := req.Token
-	err = godotenv.Load()
+	err = godotenv.Load("../../.env")
 	if err != nil {
 		kerrors.NewGRPCBizStatusError(1001, "Get env error")
 		return nil, err
@@ -38,8 +38,8 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 		kerrors.NewGRPCBizStatusError(1002, "ParseWithClaims failed")
 		resp = &auth.VerifyResp{Res: false}
 		return resp, err
-	} else if claims, ok := token.Claims.(*model.Claim); ok {
-		fmt.Println(claims.UserId, claims.RegisteredClaims.Issuer)
+	} else if _, ok := token.Claims.(*model.Claim); ok {
+		fmt.Println("Congratulation!!")
 	} else {
 		kerrors.NewGRPCBizStatusError(1003, "unknown claims type, cannot proceed")
 		resp = &auth.VerifyResp{Res: false}
