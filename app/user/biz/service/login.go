@@ -37,9 +37,21 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	}
 
 	// 3. authorization
-	token, _ := rpc.AuthClient.DeliverTokenByRPC(s.ctx, &auth.DeliverTokenReq{UserId: int32(row.ID)})
-	resp = &user.LoginResp{
-		Token: token.Token,
+	// dev
+	//rpc.Init()
+	if rpc.AuthClient == nil {
+		println("authclient is nil")
+		return nil, errors.New("authclient is nil")
+
+	} else {
+		token, err := rpc.AuthClient.DeliverTokenByRPC(s.ctx, &auth.DeliverTokenReq{UserId: int32(row.ID)})
+		if err != nil {
+			print("cannot get token")
+		}
+		resp = &user.LoginResp{
+			Token: token.Token,
+		}
+		return resp, nil
 	}
-	return resp, nil
+
 }

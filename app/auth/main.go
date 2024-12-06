@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	_ = godotenv.Load("../../.env")
+	_ = godotenv.Load(".env")
 	opts := kitexInit()
 
 	svr := authservice.NewServer(new(AuthServiceImpl), opts...)
@@ -43,7 +43,7 @@ func kitexInit() (opts []server.Option) {
 	}))
 
 	// service register - consul
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0], consul.WithCheck(nil))
 	if err != nil {
 		log.Fatal(err)
 	}

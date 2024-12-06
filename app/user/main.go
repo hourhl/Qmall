@@ -19,7 +19,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load(".env")
 	if err != nil {
 		klog.Error(err.Error())
 	}
@@ -49,7 +49,7 @@ func kitexInit() (opts []server.Option) {
 	}))
 
 	// service register - consul
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0], consul.WithCheck(nil))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,6 +69,7 @@ func kitexInit() (opts []server.Option) {
 		FlushInterval: time.Minute,
 	}
 	klog.SetOutput(asyncWriter)
+
 	server.RegisterShutdownHook(func() {
 		asyncWriter.Sync()
 	})
