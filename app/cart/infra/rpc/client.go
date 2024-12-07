@@ -14,7 +14,7 @@ var (
 	once          sync.Once
 )
 
-func InitClient() {
+func Init() {
 	once.Do(func() {
 		initProductClient()
 	})

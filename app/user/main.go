@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hourhl/Qmall/app/user/biz/dal"
+	"github.com/hourhl/Qmall/app/user/infra/rpc"
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
 	"log"
@@ -25,6 +26,7 @@ func main() {
 	}
 
 	dal.Init()
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := userservice.NewServer(new(UserServiceImpl), opts...)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hourhl/Qmall/app/checkout/biz/dal"
+	"github.com/hourhl/Qmall/app/checkout/infra/rpc"
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
 	"log"
@@ -21,6 +22,7 @@ import (
 func main() {
 	godotenv.Load()
 	dal.Init()
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := checkoutservice.NewServer(new(CheckoutServiceImpl), opts...)

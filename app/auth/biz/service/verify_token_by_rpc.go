@@ -7,7 +7,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/hourhl/Qmall/app/auth/biz/model"
 	auth "github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth"
-	"github.com/joho/godotenv"
 	"os"
 )
 
@@ -23,7 +22,9 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 	// Finish your business logic.
 
 	tokenString := req.Token
-	err = godotenv.Load("../../.env")
+	// unit test
+	//err = godotenv.Load("../../.env")
+
 	if err != nil {
 		kerrors.NewGRPCBizStatusError(1001, "Get env error")
 		return nil, err

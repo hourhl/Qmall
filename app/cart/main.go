@@ -22,7 +22,7 @@ import (
 func main() {
 	_ = godotenv.Load()
 	dal.Init()
-	rpc.InitClient()
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := cartservice.NewServer(new(CartServiceImpl), opts...)

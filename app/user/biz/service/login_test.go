@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/hourhl/Qmall/app/user/biz/dal/mysql"
 	"github.com/hourhl/Qmall/app/user/infra/rpc"
 	user "github.com/hourhl/Qmall/rpc_gen/kitex_gen/user"
@@ -11,6 +12,9 @@ import (
 
 func TestLogin_Run(t *testing.T) {
 	err := godotenv.Load("../../.env")
+	if err != nil {
+		fmt.Printf("godotenv.Load %v", err)
+	}
 	mysql.Init()
 	rpc.Init()
 	ctx := context.Background()

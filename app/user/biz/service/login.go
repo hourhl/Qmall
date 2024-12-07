@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/hourhl/Qmall/app/user/biz/dal/mysql"
 	"github.com/hourhl/Qmall/app/user/biz/model"
 	"github.com/hourhl/Qmall/app/user/infra/rpc"
@@ -37,8 +38,6 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	}
 
 	// 3. authorization
-	// dev
-	//rpc.Init()
 	if rpc.AuthClient == nil {
 		println("authclient is nil")
 		return nil, errors.New("authclient is nil")
@@ -46,11 +45,19 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	} else {
 		token, err := rpc.AuthClient.DeliverTokenByRPC(s.ctx, &auth.DeliverTokenReq{UserId: int32(row.ID)})
 		if err != nil {
-			print("cannot get token")
+			fmt.Printf("deliver token err: %v\n", err)
 		}
 		resp = &user.LoginResp{
 			Token: token.Token,
 		}
+
+		// unit test
+		//fmt.Printf("now test verify token\n")
+		//verify, err := rpc.AuthClient.VerifyTokenByRPC(s.ctx, &auth.VerifyTokenReq{Token: token.Token})
+		//if err != nil {
+		//	fmt.Printf("verify token err: %v\n", err)
+		//}
+		//fmt.Printf("verify result is %v\n", verify.Res)
 		return resp, nil
 	}
 
