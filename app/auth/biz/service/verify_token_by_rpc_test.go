@@ -13,7 +13,8 @@ func TestVerifyTokenByRPC_Run(t *testing.T) {
 
 	// right token
 	req := &auth.VerifyTokenReq{
-		Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzM2ODkwMywiaWF0IjoxNzMzMzY4OTAzfQ.oYM-5_RONxu4BYEGcngEUDIEw-SjbTEnaz_4i2kIhFs",
+		UserId: 1,
+		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzYzODA2NywiaWF0IjoxNzMzNjM4MDY3fQ.OCXcnu9Qtim9H19qxVBKUpASgahu6gprXFwQRX6seN4",
 	}
 	resp, err := s.Run(req)
 	t.Logf("err:%v", err)
@@ -21,7 +22,8 @@ func TestVerifyTokenByRPC_Run(t *testing.T) {
 
 	// wrong token
 	req = &auth.VerifyTokenReq{
-		Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhobCIsIm5iZiI6MTczMzM2ODkwMywiaWF0IjoxNzMzMzY4OTAzfQ.n6MCk1Znjfio8AhZu7e2vZxqmmci9Ey8rXTzC-C3Hxw",
+		UserId: 1,
+		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzYzODA5NywiaWF0IjoxNzMzNjM4MDk3fQ.8forh-Qxe-arhNvezhCnRrNNdtkZ9Xz5so6B5TFEbvM",
 	}
 	resp, err = s.Run(req)
 	t.Logf("err:%v", err)

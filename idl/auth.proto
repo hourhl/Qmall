@@ -15,6 +15,7 @@ message DeliverTokenReq {
 
 message VerifyTokenReq {
   string token = 1;
+  int32 userId = 2;
 }
 
 message DeliveryResp {

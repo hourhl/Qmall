@@ -9,6 +9,8 @@ import (
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth/authservice"
 	consul "github.com/kitex-contrib/registry-consul"
 	"sync"
+
+	"github.com/hourhl/Qmall/app/user/conf"
 )
 
 var (
@@ -23,11 +25,10 @@ func Init() {
 }
 
 func InitAuthClient() {
-	fmt.Printf("now init auth client\n")
 	var opts []client.Option
-	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
 	// unit test
-	r, err := consul.NewConsulResolver("127.0.0.1:8500")
+	//r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		//panic(err)
 		fmt.Printf("init authClient resolver failed, err: %v\n", err)

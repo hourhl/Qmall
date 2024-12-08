@@ -36,7 +36,7 @@ func (s *DeliverTokenByRPCService) Run(req *auth.DeliverTokenReq) (resp *auth.De
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 
 	// unit test
-	// err = godotenv.Load("../../.env")
+	//err = godotenv.Load("../../.env")
 
 	if err != nil {
 		kerrors.NewGRPCBizStatusError(1001, "Get env error")

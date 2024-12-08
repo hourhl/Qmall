@@ -39,14 +39,21 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 		kerrors.NewGRPCBizStatusError(1002, "ParseWithClaims failed")
 		resp = &auth.VerifyResp{Res: false}
 		return resp, err
-	} else if _, ok := token.Claims.(*model.Claim); ok {
-		fmt.Println("Congratulation!!")
+	} else if claim, ok := token.Claims.(*model.Claim); ok {
+		id := claim.UserId
+		if id != req.UserId {
+			fmt.Print("Id in token and userId is not match\n")
+			resp = &auth.VerifyResp{Res: false}
+			return resp, nil
+		}
+
 	} else {
 		kerrors.NewGRPCBizStatusError(1003, "unknown claims type, cannot proceed")
 		resp = &auth.VerifyResp{Res: false}
 		return resp, nil
 	}
 
+	fmt.Printf("Congratulation!!!\n")
 	resp = &auth.VerifyResp{Res: true}
 	return resp, nil
 }

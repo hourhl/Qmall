@@ -14,5 +14,7 @@ Todo list:
 4. 检查所有的数据库自动迁移
 5. 检查env的环境信息是否是online
 6. 进一步优化auth模块：token放入redis中并设置过期时间
+7. 更新所有idl
+7. 清除所有unit test标签
 
 

@@ -24,3 +24,12 @@ func Login(ctx context.Context, req *user.LoginReq, callOptions ...callopt.Optio
 	}
 	return resp, nil
 }
+
+func VerifyUser(ctx context.Context, req *user.VerifyUserReq, callOptions ...callopt.Option) (resp *user.VerifyUserResp, err error) {
+	resp, err = defaultClient.VerifyUser(ctx, req, callOptions...)
+	if err != nil {
+		klog.CtxErrorf(ctx, "VerifyUser call failed,err =%+v", err)
+		return nil, err
+	}
+	return resp, nil
+}

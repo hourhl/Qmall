@@ -19,7 +19,7 @@ func Init() {
 	dsn := fmt.Sprintf(conf.GetConf().MySQL.DSN, os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
 	// unit test
 	//dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/product?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
-	fmt.Printf("dsn: %s\n", dsn)
+	//fmt.Printf("dsn: %s\n", dsn)
 	DB, err = gorm.Open(mysql.Open(dsn),
 		&gorm.Config{
 			PrepareStmt:            true,

@@ -46,7 +46,7 @@ func kitexInit() (opts []server.Option) {
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
 
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0], consul.WithCheck(nil))
 	if err != nil {
 		log.Fatal(err)
 	}
