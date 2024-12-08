@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/google/uuid"
 	"github.com/hourhl/Qmall/app/order/biz/dal/mysql"
@@ -19,13 +20,18 @@ func NewPlaceOrderService(ctx context.Context) *PlaceOrderService {
 
 // Run create note info
 func (s *PlaceOrderService) Run(req *order.PlaceOrderReq) (resp *order.PlaceOrderResp, err error) {
+
 	if len(req.OrderItems) == 0 {
 		err = kerrors.NewGRPCBizStatusError(7005001, "order item is empty")
 		return nil, err
 	}
 	// 因为涉及到两个表的操作，因此需要用事务
 	err = mysql.DB.Transaction(func(tx *gorm.DB) error {
-		orderId, _ := uuid.NewUUID()
+		orderId, err := uuid.NewUUID()
+		if err != nil {
+			fmt.Printf("generate uuid fail")
+			return err
+		}
 
 		o := &model.Order{
 			OrderId:      orderId.String(),
@@ -43,6 +49,7 @@ func (s *PlaceOrderService) Run(req *order.PlaceOrderReq) (resp *order.PlaceOrde
 			o.Consignee.ZipCode = req.Address.ZipCode
 		}
 		if err := tx.Model(&model.Order{}).Create(o).Error; err != nil {
+			fmt.Printf("order.create failed\n")
 			return err
 		}
 

@@ -1,24 +1,24 @@
 package main
 
 import (
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	"github.com/cloudwego/kitex/server"
+	"github.com/hourhl/Qmall/app/order/biz/dal"
+	"github.com/hourhl/Qmall/app/order/conf"
+	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order/orderservice"
 	"github.com/joho/godotenv"
+	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
+	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net"
 	"time"
-
-	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/server"
-	"github.com/hourhl/Qmall/app/order/conf"
-	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order/orderservice"
-	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
-	"go.uber.org/zap/zapcore"
 )
 
 func main() {
-	_ = godotenv.Load()
+	_ = godotenv.Load(".env")
 	dal.Init()
 	opts := kitexInit()
 
