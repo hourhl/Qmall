@@ -22,6 +22,7 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 	// Finish your business logic.
 
 	tokenString := req.Token
+	fmt.Printf("tokenString : %s", tokenString)
 	// unit test
 	//err = godotenv.Load("../../.env")
 
@@ -30,12 +31,14 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 		return nil, err
 	}
 	mySigningKey := []byte(os.Getenv("JWT_SECRET_KEY"))
+	fmt.Printf("mysignkey : %v\n", mySigningKey)
 
 	token, err := jwt.ParseWithClaims(tokenString, &model.Claim{}, func(token *jwt.Token) (interface{}, error) {
 		return mySigningKey, nil
 	})
 
 	if err != nil {
+		fmt.Print("ParseWithClaims failed\n")
 		kerrors.NewGRPCBizStatusError(1002, "ParseWithClaims failed")
 		resp = &auth.VerifyResp{Res: false}
 		return resp, err

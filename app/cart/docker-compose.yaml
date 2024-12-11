@@ -3,6 +3,8 @@ services:
   mysql:
     image: 'mysql:latest'
     ports:
+#      - 3306:3306
+      # unit test
       - 3304:3306
     environment:
       - MYSQL_DATABASE=cart

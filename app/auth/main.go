@@ -20,7 +20,6 @@ import (
 func main() {
 	_ = godotenv.Load(".env")
 	opts := kitexInit()
-
 	svr := authservice.NewServer(new(AuthServiceImpl), opts...)
 
 	err := svr.Run()

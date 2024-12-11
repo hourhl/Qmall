@@ -3,6 +3,7 @@ package rpc
 import (
 	"fmt"
 	"github.com/cloudwego/kitex/client"
+	"github.com/hourhl/Qmall/app/cart/conf"
 	cartutils "github.com/hourhl/Qmall/app/cart/utils"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/user/userservice"
@@ -25,10 +26,10 @@ func Init() {
 
 func initProductClient() {
 	var opts []client.Option
-	// dev
-	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	//dev
+	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
 	// unit test
-	r, err := consul.NewConsulResolver("127.0.0.1:8500")
+	//r, err := consul.NewConsulResolver("127.0.0.1:8500")
 
 	cartutils.MustHandlerError(err)
 	opts = append(opts, client.WithResolver(r))
@@ -42,9 +43,9 @@ func initProductClient() {
 func InitUserClient() {
 	var opts []client.Option
 	// dev
-	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
 	// unit test
-	r, err := consul.NewConsulResolver("127.0.0.1:8500")
+	//r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		fmt.Printf("init consul resolver error: %v\n", err)
 	}

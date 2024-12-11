@@ -20,7 +20,7 @@ import (
 )
 
 func main() {
-	godotenv.Load()
+	godotenv.Load(".env")
 	dal.Init()
 	rpc.Init()
 	opts := kitexInit()

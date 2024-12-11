@@ -5,7 +5,6 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/transport"
-	"github.com/hourhl/Qmall/app/checkout/conf"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/cart/cartservice"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/order/orderservice"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/payment/paymentservice"
@@ -34,14 +33,22 @@ func Init() {
 
 func InitPaymentClient() {
 	var opts []client.Option
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	// unit test
+	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		panic(err)
 	}
 
 	opts = append(opts, client.WithResolver(r))
+	//opts = append(opts,
+	//	client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+	//	client.WithTransportProtocol(transport.GRPC),
+	//	client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	//)
+	// unit test
 	opts = append(opts,
-		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "checkout"}),
 		client.WithTransportProtocol(transport.GRPC),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 	)
@@ -54,14 +61,22 @@ func InitPaymentClient() {
 
 func InitCartClient() {
 	var opts []client.Option
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	// unit test
+	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		panic(err)
 	}
 
 	opts = append(opts, client.WithResolver(r))
+	//opts = append(opts,
+	//	client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+	//	client.WithTransportProtocol(transport.GRPC),
+	//	client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	//)
+	// unit test
 	opts = append(opts,
-		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "checkout"}),
 		client.WithTransportProtocol(transport.GRPC),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 	)
@@ -74,14 +89,22 @@ func InitCartClient() {
 
 func InitProductClient() {
 	var opts []client.Option
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	// unit test
+	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		panic(err)
 	}
 
 	opts = append(opts, client.WithResolver(r))
+	//opts = append(opts,
+	//	client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+	//	client.WithTransportProtocol(transport.GRPC),
+	//	client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	//)
+	// unit test
 	opts = append(opts,
-		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "checkout"}),
 		client.WithTransportProtocol(transport.GRPC),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 	)
@@ -94,14 +117,22 @@ func InitProductClient() {
 
 func InitOrderClient() {
 	var opts []client.Option
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	//r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
+	// unit test
+	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		panic(err)
 	}
 
 	opts = append(opts, client.WithResolver(r))
+	//opts = append(opts,
+	//	client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+	//	client.WithTransportProtocol(transport.GRPC),
+	//	client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	//)
+	// unit test
 	opts = append(opts,
-		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Kitex.Service}),
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "checkout"}),
 		client.WithTransportProtocol(transport.GRPC),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 	)

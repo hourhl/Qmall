@@ -23,8 +23,8 @@ func TestVerifyUser_Run(t *testing.T) {
 	// init req and assert value
 
 	req := &user.VerifyUserReq{
-		UserId: int32(3),
-		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzYzOTM5NSwiaWF0IjoxNzMzNjM5Mzk1fQ.359m3KgTdxjHPcCZxfOi51E0waVmjFmaq_JyeRlYcYw",
+		UserId: 3,
+		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzkwMzUzMiwiaWF0IjoxNzMzOTAzNTMyfQ.87f9phamxfBfhI0xnTZSdFKqHCugTl0V3BTmIRX25mI",
 	}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
