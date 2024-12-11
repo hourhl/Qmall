@@ -47,10 +47,10 @@
    cd Qmall
    docker-compose up -d
    ```
-  可以访问http://127.0.0.1:8500/ui/dc1来查看注册的服务
+  可以访问[consul的UI界面](http://127.0.0.1:8500/ui/dc1)来查看注册的服务
 * 启动模块
 
-   以user服务为例(其依赖于auth服务，故先启动auth模块)
+   以user服务为例(其依赖于auth服务，故先启动auth服务)
    ```shell
    # 启动auth服务
    cd app/auth
@@ -62,7 +62,7 @@
    docker-compose up -d
    go run .
    ```
-  可以在http://127.0.0.1:8500/ui/dc1/services看到auth服务和user服务注册成功
+  可以在[consul的UI界面](http://127.0.0.1:8500/ui/dc1/services)看到auth服务和user服务注册成功
 
 
 ## 完善 or 优化
@@ -92,5 +92,9 @@
 
 [cloudwego/gomall视频资料](https://space.bilibili.com/3494360534485730/channel/collectiondetail?sid=2632484)
 
+[kitex文档](https://www.cloudwego.io/zh/docs/kitex/)
+
 [golang-jwt文档](https://pkg.go.dev/github.com/golang-jwt/jwt#section-documentation)
+
+
 
