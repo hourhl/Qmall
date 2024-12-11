@@ -1,11 +1,11 @@
 Module index :
-    auth - 1
-    user - 2
-    product - 3
-    cart - 4
-    payment - 5
+    auth - 1 - unit test
+    user - 2 - unit test
+    product - 3 - unit test
+    cart - 4 - unit test
+    payment - 5 - unit test
     checkout - 6
-    order - 7
+    order - 7 - unit test
 
 Todo list:
 1. 单元测试register时，不修改mysql路径的读取方式为直接读取，尝试读取配置文件
