@@ -29,7 +29,6 @@ _testmain.go
 *.sublime-workspace
 !.gitkeep
 .DS_Store
-/.idea
 .idea/
 /.vscode
 /output
