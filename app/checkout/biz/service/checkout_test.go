@@ -37,7 +37,7 @@ func TestCheckout_Run(t *testing.T) {
 	}
 
 	req := &checkout.CheckoutReq{
-		UserId:     uint32(3),
+		UserId:     3,
 		Email:      "hourhl@hourl.com",
 		Address:    address,
 		CreditCard: creditcard,

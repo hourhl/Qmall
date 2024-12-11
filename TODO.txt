@@ -4,7 +4,7 @@ Module index :
     product - 3 - unit test
     cart - 4 - unit test
     payment - 5 - unit test
-    checkout - 6 - unit test
+    checkout - 6
     order - 7 - unit test
 
 Todo list:
@@ -16,6 +16,5 @@ Todo list:
 6. 进一步优化auth模块：token放入redis中并设置过期时间
 7. 更新所有idl
 7. 清除所有unit test标签
-8. debug : cart模块加入verify user的逻辑后，checkout 的unit test 总是显示token verify error
 
 
