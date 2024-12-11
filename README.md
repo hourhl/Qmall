@@ -33,8 +33,8 @@
    * 订单结算
 7. 支付
    * 支付
-8. 链路追踪 - 集成OpenTelemetry
-
+8. OpenTelemetry - 链路追踪
+9. Redis - 缓存
 
 ## 运行
 
