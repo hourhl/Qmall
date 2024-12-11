@@ -20,14 +20,17 @@ import (
 )
 
 func main() {
-	_ = godotenv.Load()
+	err := godotenv.Load(".env")
+	if err != nil {
+		klog.Error(err.Error())
+	}
 	dal.Init()
-	rpc.InitClient()
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := cartservice.NewServer(new(CartServiceImpl), opts...)
 
-	err := svr.Run()
+	err = svr.Run()
 	if err != nil {
 		klog.Error(err.Error())
 	}
@@ -47,7 +50,7 @@ func kitexInit() (opts []server.Option) {
 	}))
 
 	// service register - consul
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0], consul.WithCheck(nil))
 	if err != nil {
 		log.Fatal(err)
 	}

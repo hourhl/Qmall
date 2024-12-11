@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hourhl/Qmall/app/checkout/biz/dal"
+	"github.com/hourhl/Qmall/app/checkout/infra/rpc"
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
 	"log"
@@ -19,8 +20,9 @@ import (
 )
 
 func main() {
-	godotenv.Load()
+	godotenv.Load(".env")
 	dal.Init()
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := checkoutservice.NewServer(new(CheckoutServiceImpl), opts...)
@@ -44,7 +46,7 @@ func kitexInit() (opts []server.Option) {
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
 
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0], consul.WithCheck(nil))
 	if err != nil {
 		log.Fatal(err)
 	}

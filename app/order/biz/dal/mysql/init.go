@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hourhl/Qmall/app/order/biz/model"
-	"github.com/hourhl/Qmall/app/order/conf"
 	"os"
 
 	"gorm.io/driver/mysql"
@@ -17,7 +16,10 @@ var (
 )
 
 func Init() {
-	dsn := fmt.Sprintf(conf.GetConf().MySQL.DSN, os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
+	// dev
+	//dsn := fmt.Sprintf(conf.GetConf().MySQL.DSN, os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
+	// unit test
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:3307)/order?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
 	DB, err = gorm.Open(mysql.Open(dsn),
 		&gorm.Config{
 			PrepareStmt:            true,
@@ -27,10 +29,9 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
-
-	if os.Getenv("GO_ENV") != "online" {
-		if err := DB.AutoMigrate(&model.Order{}, &model.OrderItem{}); err != nil {
-			klog.Error(err)
-		}
+	if err := DB.AutoMigrate(&model.Order{}, &model.OrderItem{}); err != nil {
+		fmt.Printf("auto migrate err:%v\n", err)
+		klog.Error(err)
 	}
+
 }

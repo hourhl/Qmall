@@ -10,24 +10,25 @@ import (
 	"testing"
 )
 
-func TestLogin_Run(t *testing.T) {
+func TestVerifyUser_Run(t *testing.T) {
 	err := godotenv.Load("../../.env")
-	if err != nil {
-		fmt.Printf("godotenv.Load %v", err)
-	}
 	mysql.Init()
 	rpc.Init()
 	ctx := context.Background()
-	s := NewLoginService(ctx)
+	s := NewVerifyUserService(ctx)
+	if err != nil {
+		fmt.Printf("loading .env files failed: %s\n", err.Error())
+		return
+	}
 	// init req and assert value
-	req := &user.LoginReq{
-		Email:    "hourhl3@hourhl.com",
-		Password: "333336",
+
+	req := &user.VerifyUserReq{
+		UserId: 3,
+		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzkwMzUzMiwiaWF0IjoxNzMzOTAzNTMyfQ.87f9phamxfBfhI0xnTZSdFKqHCugTl0V3BTmIRX25mI",
 	}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
 
-	// status : PASS
-
+	// status : PASSS
 }

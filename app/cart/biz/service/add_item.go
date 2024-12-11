@@ -19,6 +19,20 @@ func NewAddItemService(ctx context.Context) *AddItemService {
 
 // Run create note info
 func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err error) {
+
+	// 1. check user and token
+	//userVerifyResp, err := rpc.UserClient.VerifyUser(s.ctx, &user.VerifyUserReq{
+	//	UserId: int32(req.UserId),
+	//	Token:  req.Token,
+	//})
+	//if err != nil {
+	//	return nil, err
+	//}
+	//if userVerifyResp == nil || userVerifyResp.Res == false {
+	//	return nil, kerrors.NewGRPCBizStatusError(40001, "user verify fail")
+	//}
+
+	// 2. check product
 	productResp, err := rpc.ProductClient.GetProduct(s.ctx, &product.GetProductReq{Id: req.Item.ProductId})
 	if err != nil {
 		return nil, err
@@ -27,6 +41,8 @@ func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err 
 	if productResp == nil || productResp.Product.Id == 0 {
 		return nil, kerrors.NewBizStatusError(40004, "product does not exist")
 	}
+
+	// 3. add Item
 	cartItem := &model.Cart{
 		UserId:    req.UserId,
 		ProductId: req.Item.ProductId,
@@ -37,6 +53,8 @@ func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err 
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(50000, err.Error())
 	}
-	return &cart.AddItemResp{}, nil
+	return &cart.AddItemResp{
+		Res: true,
+	}, nil
 
 }

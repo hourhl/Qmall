@@ -29,6 +29,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingUnary),
 	),
+	"VerifyUser": kitex.NewMethodInfo(
+		verifyUserHandler,
+		newVerifyUserArgs,
+		newVerifyUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingUnary),
+	),
 }
 
 var (
@@ -401,6 +408,159 @@ func (p *LoginResult) GetResult() interface{} {
 	return p.Success
 }
 
+func verifyUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(user.VerifyUserReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(user.UserService).VerifyUser(ctx, req)
+		if err != nil {
+			return err
+		}
+		return st.SendMsg(resp)
+	case *VerifyUserArgs:
+		success, err := handler.(user.UserService).VerifyUser(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*VerifyUserResult)
+		realResult.Success = success
+		return nil
+	default:
+		return errInvalidMessageType
+	}
+}
+func newVerifyUserArgs() interface{} {
+	return &VerifyUserArgs{}
+}
+
+func newVerifyUserResult() interface{} {
+	return &VerifyUserResult{}
+}
+
+type VerifyUserArgs struct {
+	Req *user.VerifyUserReq
+}
+
+func (p *VerifyUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(user.VerifyUserReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *VerifyUserArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *VerifyUserArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *VerifyUserArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *VerifyUserArgs) Unmarshal(in []byte) error {
+	msg := new(user.VerifyUserReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var VerifyUserArgs_Req_DEFAULT *user.VerifyUserReq
+
+func (p *VerifyUserArgs) GetReq() *user.VerifyUserReq {
+	if !p.IsSetReq() {
+		return VerifyUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *VerifyUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *VerifyUserArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type VerifyUserResult struct {
+	Success *user.VerifyUserResp
+}
+
+var VerifyUserResult_Success_DEFAULT *user.VerifyUserResp
+
+func (p *VerifyUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(user.VerifyUserResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *VerifyUserResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *VerifyUserResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *VerifyUserResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *VerifyUserResult) Unmarshal(in []byte) error {
+	msg := new(user.VerifyUserResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *VerifyUserResult) GetSuccess() *user.VerifyUserResp {
+	if !p.IsSetSuccess() {
+		return VerifyUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *VerifyUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*user.VerifyUserResp)
+}
+
+func (p *VerifyUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *VerifyUserResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -426,6 +586,16 @@ func (p *kClient) Login(ctx context.Context, Req *user.LoginReq) (r *user.LoginR
 	_args.Req = Req
 	var _result LoginResult
 	if err = p.c.Call(ctx, "Login", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) VerifyUser(ctx context.Context, Req *user.VerifyUserReq) (r *user.VerifyUserResp, err error) {
+	var _args VerifyUserArgs
+	_args.Req = Req
+	var _result VerifyUserResult
+	if err = p.c.Call(ctx, "VerifyUser", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

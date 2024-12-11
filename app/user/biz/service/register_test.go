@@ -17,14 +17,14 @@ func TestRegister_Run(t *testing.T) {
 	// init req and assert value
 
 	req := &user.RegisterReq{
-		Email:           "hourhl1@hourhl.com",
-		Password:        "123hwih",
-		ConfirmPassword: "123hwih",
+		Email:           "hourhl3@hourhl.com",
+		Password:        "333336",
+		ConfirmPassword: "333336",
 	}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
 
-	// todo: edit your unit test
+	// status : PASS
 
 }

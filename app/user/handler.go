@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	user "github.com/hourhl/Qmall/rpc_gen/kitex_gen/user"
 	"github.com/hourhl/Qmall/app/user/biz/service"
+	user "github.com/hourhl/Qmall/rpc_gen/kitex_gen/user"
 )
 
 // UserServiceImpl implements the last service interface defined in the IDL.
@@ -19,6 +19,13 @@ func (s *UserServiceImpl) Register(ctx context.Context, req *user.RegisterReq) (
 // Login implements the UserServiceImpl interface.
 func (s *UserServiceImpl) Login(ctx context.Context, req *user.LoginReq) (resp *user.LoginResp, err error) {
 	resp, err = service.NewLoginService(ctx).Run(req)
+
+	return resp, err
+}
+
+// VerifyUser implements the UserServiceImpl interface.
+func (s *UserServiceImpl) VerifyUser(ctx context.Context, req *user.VerifyUserReq) (resp *user.VerifyUserResp, err error) {
+	resp, err = service.NewVerifyUserService(ctx).Run(req)
 
 	return resp, err
 }

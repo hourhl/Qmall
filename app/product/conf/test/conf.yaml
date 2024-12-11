@@ -1,6 +1,6 @@
 kitex:
   service: "product"
-  address: ":8883"
+  address: "127.0.0.1:8883"
   log_level: info
   log_file_name: "log/kitex.log"
   log_max_size: 10
@@ -14,7 +14,9 @@ registry:
   password: ""
 
 mysql:
-  dsn: "%s:%s@tcp(%s:3306)/product?charset=utf8mb4&parseTime=True&loc=Local"
+#  dsn: "%s:%s@tcp(%s:3306)/product?charset=utf8mb4&parseTime=True&loc=Local"
+  # unit test
+  dsn: "%s:%s@tcp(%s:3303)/product?charset=utf8mb4&parseTime=True&loc=Local"
 
 redis:
   address: "127.0.0.1:6379"

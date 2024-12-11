@@ -17,24 +17,30 @@ message CartItem {
 
 message AddItemReq {
   uint32 user_id = 1;
-  CartItem item = 2;
+  string token = 2;
+  CartItem item = 3;
 }
 
-message AddItemResp {}
+message AddItemResp {
+  bool res = 1;
+}
 
 message EmptyCartReq {
   uint32 user_id = 1;
+  string token = 2;
 }
 
 message EmptyCartResp {}
 
 message Cart {
   uint32 user_id = 1;
-  repeated CartItem items = 2;
+  string token = 2;
+  repeated CartItem items = 3;
 }
 
 message GetCartReq {
   uint32 user_id = 1;
+  string token = 2;
 }
 
 message GetCartResp {

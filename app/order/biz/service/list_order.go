@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/hourhl/Qmall/app/order/biz/dal/mysql"
 	"github.com/hourhl/Qmall/app/order/biz/model"
@@ -23,7 +24,10 @@ func (s *ListOrderService) Run(req *order.ListOrderReq) (resp *order.ListOrderRe
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(7005002, err.Error())
 	}
-
+	if list == nil || len(list) == 0 {
+		fmt.Printf("list is nil\n")
+		return nil, nil
+	}
 	var orders []*order.Order
 	for _, v := range list {
 		var items []*order.OrderItem
