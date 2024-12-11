@@ -30,7 +30,7 @@ _testmain.go
 !.gitkeep
 .DS_Store
 /.idea
-.idea/
+./.idea
 /.vscode
 /output
 *.local.yml
