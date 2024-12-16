@@ -7,7 +7,7 @@
 参考[Gmall](https://github.com/cloudwego/biz-demo/tree/main/gomall)完成
 
 ## 技术栈
-\- Go - Hertz   -Kitex  -Consul   - OpenTelemetry   - Gorm   -cwgo   -Redis
+\-Go -Hertz   -Kitex  -Consul   -OpenTelemetry   -Gorm   -cwgo   -Redis -Prometheus
 
 ## 项目详细信息
 ### 基本功能
@@ -33,8 +33,9 @@
    * 订单结算
 7. 支付
    * 支付
-8. OpenTelemetry - 链路追踪
-9. Redis - 缓存
+8. Prometheus - 指标
+9. OpenTelemetry - 链路追踪
+10. Redis - 缓存
 
 ## 运行
 
