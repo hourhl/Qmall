@@ -6,8 +6,8 @@ import (
 	"github.com/hourhl/Qmall/app/product/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 	"gorm.io/plugin/opentelemetry/tracing"
+	"os"
 )
 
 var (

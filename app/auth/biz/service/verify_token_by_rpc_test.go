@@ -23,7 +23,7 @@ func TestVerifyTokenByRPC_Run(t *testing.T) {
 	// wrong token
 	req := &auth.VerifyTokenReq{
 		UserId: 3,
-		Token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczMzkwMzUzMiwiaWF0IjoxNzMzOTAzNTMyfQ.87f9phamxfBfhI0xnTZSdFKqHCugTl0V3BTmIRX25mI",
+		Token:  "IUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsImlzcyI6ImhvdXJobCIsIm5iZiI6MTczNDQwNzIyOCwiaWF0IjoxNzM0NDA3MjI4fQ.kbx8OvLSEV8KiHRJLGR6y84rxbQ-nSqdct-Ei0V5tvU",
 	}
 	resp, err := s.Run(req)
 	t.Logf("err:%v", err)

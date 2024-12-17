@@ -3,11 +3,10 @@ package rpc
 import (
 	"fmt"
 	"github.com/cloudwego/kitex/client"
+	"github.com/hourhl/Qmall/app/user/conf"
 	"github.com/hourhl/Qmall/common/clientsuite"
 	"github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth/authservice"
 	"sync"
-
-	"github.com/hourhl/Qmall/app/user/conf"
 )
 
 var (
