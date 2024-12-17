@@ -8,6 +8,7 @@ import (
 	"github.com/hourhl/Qmall/common/mtl"
 	prometheus "github.com/kitex-contrib/monitor-prometheus"
 	consul "github.com/kitex-contrib/registry-consul"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 )
 
 type CommonServerSuite struct {
@@ -28,7 +29,7 @@ func (s CommonServerSuite) Options() []server.Option {
 		),
 		server.WithSuite(tracing.NewServerSuite()),
 	}
-	r, err := consul.NewConsulRegister(s.RegistryAddr)
+	r, err := consul.NewConsulRegister(s.RegistryAddr, consul.WithCheck(nil))
 	if err != nil {
 		klog.Fatal(err)
 	}

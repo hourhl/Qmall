@@ -19,7 +19,7 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
-      - "3000:3000"
+      - "3300:3000"
   jaeger-all-in-one:
     container_name: jaeger-all-in-one
     image: jaegertracing/all-in-one:latest

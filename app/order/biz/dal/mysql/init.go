@@ -8,6 +8,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/plugin/opentelemetry/tracing"
 )
 
 var (

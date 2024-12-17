@@ -7,6 +7,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/transport"
 	consul "github.com/kitex-contrib/registry-consul"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 )
 
 type CommonClientSuit struct {

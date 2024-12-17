@@ -20,3 +20,4 @@ func TestDeliverTokenByRPC_Run(t *testing.T) {
 	t.Logf("resp.Token:\n %s", resp.Token)
 	// status : PASS
 }
+
