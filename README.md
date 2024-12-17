@@ -7,7 +7,7 @@
 参考[Gmall](https://github.com/cloudwego/biz-demo/tree/main/gomall)完成
 
 ## 技术栈
-\-Go -Hertz   -Kitex  -Consul   -OpenTelemetry   -Gorm   -cwgo   -Redis -Prometheus
+\-Go -cwgo -Kitex -Gorm -MySQL -Redis -Consul -Prometheus -OpenTelemetry          
 
 ## 项目详细信息
 ### 基本功能

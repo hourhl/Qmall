@@ -26,4 +26,7 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	if err := DB.Use(tracing.NewPlugin(tracing.WithoutMetrics())); err != nil {
+		panic(err)
+	}
 }

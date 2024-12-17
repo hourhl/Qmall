@@ -24,6 +24,8 @@ var (
 func main() {
 	_ = godotenv.Load(".env")
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
+	p := mtl.InitTracing(ServiceName)
+	defer p.Shutdown(context.Background())
 	opts := kitexInit()
 	svr := authservice.NewServer(new(AuthServiceImpl), opts...)
 

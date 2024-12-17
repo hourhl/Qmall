@@ -26,9 +26,13 @@ func Init() {
 			SkipDefaultTransaction: true,
 		},
 	)
-
-	DB.AutoMigrate(&model.Cart{})
 	if err != nil {
 		panic(err)
 	}
+	if err := DB.Use(tracing.NewPlugin(tracing.WithoutMetrics())); err != nil {
+		panic(err)
+	}
+
+	DB.AutoMigrate(&model.Cart{})
+
 }

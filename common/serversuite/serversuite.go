@@ -26,6 +26,7 @@ func (s CommonServerSuite) Options() []server.Option {
 			prometheus.WithDisableServer(true),
 			prometheus.WithRegistry(mtl.Registry)),
 		),
+		server.WithSuite(tracing.NewServerSuite()),
 	}
 	r, err := consul.NewConsulRegister(s.RegistryAddr)
 	if err != nil {

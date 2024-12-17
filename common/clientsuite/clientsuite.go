@@ -21,6 +21,7 @@ func (s CommonClientSuit) Options() []client.Option {
 		}),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 		client.WithTransportProtocol(transport.GRPC),
+		client.WithSuite(tracing.NewClientSuite()),
 	}
 
 	r, err := consul.NewConsulResolver(s.RegistryAddr)

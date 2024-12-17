@@ -29,7 +29,8 @@ func main() {
 		klog.Error(err.Error())
 	}
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
-
+	p := mtl.InitTracing(ServiceName)
+	defer p.Shutdown(context.Background())
 	dal.Init()
 	rpc.Init()
 	opts := kitexInit()

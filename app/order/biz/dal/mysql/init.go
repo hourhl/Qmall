@@ -29,9 +29,11 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	if err := DB.Use(tracing.NewPlugin(tracing.WithoutMetrics())); err != nil {
+		panic(err)
+	}
 	if err := DB.AutoMigrate(&model.Order{}, &model.OrderItem{}); err != nil {
 		fmt.Printf("auto migrate err:%v\n", err)
 		klog.Error(err)
 	}
-
 }
