@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/hourhl/Qmall/app/auth/biz/dal/redis"
 	"github.com/hourhl/Qmall/app/auth/biz/model"
 	auth "github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth"
 	"os"
@@ -44,7 +45,13 @@ func (s *DeliverTokenByRPCService) Run(req *auth.DeliverTokenReq) (resp *auth.De
 	}
 	mySigningKey := []byte(os.Getenv("JWT_SECRET_KEY"))
 	ss, err := token.SignedString(mySigningKey)
-
 	resp = &auth.DeliveryResp{Token: ss}
+
+	// Redis: Cache
+	cachedKey := fmt.Sprintf("%s_%d", "token", req.UserId)
+	if err != nil {
+		return resp, err
+	}
+	_ = redis.RedisClient.Set(s.ctx, cachedKey, ss, time.Minute*15)
 	return resp, err
 }

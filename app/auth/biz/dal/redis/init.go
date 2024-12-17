@@ -2,9 +2,8 @@ package redis
 
 import (
 	"context"
-
-	"github.com/redis/go-redis/v9"
 	"github.com/hourhl/Qmall/app/auth/conf"
+	"github.com/redis/go-redis/v9"
 )
 
 var (

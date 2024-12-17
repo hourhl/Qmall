@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/hourhl/Qmall/app/auth/biz/dal"
 	"github.com/hourhl/Qmall/common/mtl"
 	"github.com/hourhl/Qmall/common/serversuite"
 	"github.com/joho/godotenv"
@@ -15,7 +16,6 @@ import (
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-
 )
 
 var (
@@ -28,6 +28,7 @@ func main() {
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
 	p := mtl.InitTracing(ServiceName)
 	defer p.Shutdown(context.Background())
+	dal.Init()
 	opts := kitexInit()
 	svr := authservice.NewServer(new(AuthServiceImpl), opts...)
 
