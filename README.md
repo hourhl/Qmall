@@ -4,7 +4,7 @@
 
 本项目是2024年字节青训营11月的后端项目，使用微服务架构来实现电子商城。具体要求见[项目方案](./项目方案.md)
 
-参考[Gmall](https://github.com/cloudwego/biz-demo/tree/main/gomall)完成
+参考[Gomall](https://github.com/cloudwego/biz-demo/tree/main/gomall)完成
 
 ## 技术栈
 \-Go -cwgo -Kitex -Gorm -MySQL -Redis -Consul -Prometheus -OpenTelemetry          
