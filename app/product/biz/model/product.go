@@ -2,7 +2,11 @@ package model
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
+	"time"
 )
 
 type Product struct {
@@ -40,5 +44,56 @@ func NewProductQuery(ctx context.Context, db *gorm.DB) *ProductQuery {
 	return &ProductQuery{
 		ctx: ctx,
 		db:  db,
+	}
+}
+
+type CachedProductQuery struct {
+	productQuery ProductQuery
+	cacheClient  *redis.Client
+}
+
+func (c CachedProductQuery) GetById(productId int) (product Product, err error) {
+	cachedKey := fmt.Sprintf("%s_%d", "product", productId)
+	cachedResult := c.cacheClient.Get(c.productQuery.ctx, cachedKey)
+
+	err = func() error {
+		if err := cachedResult.Err(); err != nil {
+			return err
+		}
+		cachedResultByte, err := cachedResult.Bytes()
+		if err != nil {
+			return err
+		}
+
+		err = json.Unmarshal(cachedResultByte, &product)
+		fmt.Printf("get product from redis\n")
+		if err != nil {
+			return err
+		}
+		return nil
+	}()
+
+	if err != nil {
+		fmt.Printf("cannot get product from redis\n")
+		product, err = c.productQuery.GetById(productId)
+		if err != nil {
+			return Product{}, err
+		}
+		encoded, err := json.Marshal(product)
+		if err != nil {
+			return product, nil
+		}
+		_ = c.cacheClient.Set(c.productQuery.ctx, cachedKey, encoded, time.Hour)
+	}
+	return
+}
+
+func NewCachedProductQuery(ctx context.Context, db *gorm.DB, cachedClient *redis.Client) *CachedProductQuery {
+	return &CachedProductQuery{
+		productQuery: ProductQuery{
+			ctx: ctx,
+			db:  db,
+		},
+		cacheClient: cachedClient,
 	}
 }
