@@ -6,8 +6,8 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/transport"
-	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+	consul "github.com/kitex-contrib/registry-consul"
 )
 
 type CommonClientSuit struct {
@@ -26,8 +26,6 @@ func (s CommonClientSuit) Options() []client.Option {
 	}
 
 	r, err := consul.NewConsulResolver(s.RegistryAddr)
-	// unit test
-	//r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
 		klog.Fatal(err)
 	}

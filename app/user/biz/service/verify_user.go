@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/hourhl/Qmall/app/user/biz/dal/mysql"
 	"github.com/hourhl/Qmall/app/user/biz/model"
 	"github.com/hourhl/Qmall/app/user/infra/rpc"
@@ -26,7 +25,6 @@ func (s *VerifyUserService) Run(req *user.VerifyUserReq) (resp *user.VerifyUserR
 	}
 	row, err := model.GetById(mysql.DB, int(req.UserId))
 	if row == nil || err != nil {
-		fmt.Printf("user is not exist\n")
 		return nil, errors.New("user not exist")
 	}
 
@@ -34,13 +32,11 @@ func (s *VerifyUserService) Run(req *user.VerifyUserReq) (resp *user.VerifyUserR
 	if rpc.AuthClient == nil {
 		return nil, errors.New("auth client is nil")
 	}
-	fmt.Printf("auth client is not nil\n")
 	tokenVerify, err := rpc.AuthClient.VerifyTokenByRPC(s.ctx, &auth.VerifyTokenReq{
 		Token:  req.Token,
 		UserId: req.UserId,
 	})
 	if tokenVerify == nil || err != nil {
-		fmt.Printf("verify token error\n")
 		return nil, errors.New("verify token error")
 	}
 

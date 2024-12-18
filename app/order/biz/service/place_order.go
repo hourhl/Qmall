@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/google/uuid"
 	"github.com/hourhl/Qmall/app/order/biz/dal/mysql"
@@ -29,7 +28,6 @@ func (s *PlaceOrderService) Run(req *order.PlaceOrderReq) (resp *order.PlaceOrde
 	err = mysql.DB.Transaction(func(tx *gorm.DB) error {
 		orderId, err := uuid.NewUUID()
 		if err != nil {
-			fmt.Printf("generate uuid fail")
 			return err
 		}
 
@@ -49,7 +47,6 @@ func (s *PlaceOrderService) Run(req *order.PlaceOrderReq) (resp *order.PlaceOrde
 			o.Consignee.ZipCode = req.Address.ZipCode
 		}
 		if err := tx.Model(&model.Order{}).Create(o).Error; err != nil {
-			fmt.Printf("order.create failed\n")
 			return err
 		}
 

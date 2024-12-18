@@ -66,7 +66,6 @@ func (c CachedProductQuery) GetById(productId int) (product Product, err error) 
 		}
 
 		err = json.Unmarshal(cachedResultByte, &product)
-		fmt.Printf("get product from redis\n")
 		if err != nil {
 			return err
 		}
@@ -74,7 +73,6 @@ func (c CachedProductQuery) GetById(productId int) (product Product, err error) 
 	}()
 
 	if err != nil {
-		fmt.Printf("cannot get product from redis\n")
 		product, err = c.productQuery.GetById(productId)
 		if err != nil {
 			return Product{}, err

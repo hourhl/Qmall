@@ -1,7 +1,6 @@
 package rpc
 
 import (
-	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/hourhl/Qmall/app/user/conf"
 	"github.com/hourhl/Qmall/common/clientsuite"
@@ -33,7 +32,6 @@ func InitAuthClient() {
 	}
 	AuthClient, err = authservice.NewClient("auth", opts...)
 	if err != nil {
-		fmt.Sprintf("init authClient failed, err: %v\n", err)
 		panic(err)
 	}
 

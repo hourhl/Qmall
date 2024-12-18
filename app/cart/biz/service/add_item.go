@@ -21,16 +21,6 @@ func NewAddItemService(ctx context.Context) *AddItemService {
 func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err error) {
 
 	// 1. check user and token
-	//userVerifyResp, err := rpc.UserClient.VerifyUser(s.ctx, &user.VerifyUserReq{
-	//	UserId: int32(req.UserId),
-	//	Token:  req.Token,
-	//})
-	//if err != nil {
-	//	return nil, err
-	//}
-	//if userVerifyResp == nil || userVerifyResp.Res == false {
-	//	return nil, kerrors.NewGRPCBizStatusError(40001, "user verify fail")
-	//}
 
 	// 2. check product
 	productResp, err := rpc.ProductClient.GetProduct(s.ctx, &product.GetProductReq{Id: req.Item.ProductId})

@@ -1,8 +1,8 @@
 package rpc
 
 import (
-	"fmt"
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hourhl/Qmall/app/cart/conf"
 	cartutils "github.com/hourhl/Qmall/app/cart/utils"
 	"github.com/hourhl/Qmall/common/clientsuite"
@@ -38,7 +38,7 @@ func initProductClient() {
 
 	ProductClient, err = productcatalogservice.NewClient("product", opts...)
 	if err != nil {
-		fmt.Printf("init product client error: %v\n", err)
+		klog.Fatal(err)
 	}
 	cartutils.MustHandlerError(err)
 }
@@ -52,7 +52,7 @@ func InitUserClient() {
 	}
 	UserClient, err = userservice.NewClient("user", opts...)
 	if err != nil {
-		fmt.Printf("init user client error: %v\n", err)
+		klog.Fatal(err)
 	}
 	cartutils.MustHandlerError(err)
 

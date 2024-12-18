@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hourhl/Qmall/app/checkout/infra/rpc"
@@ -26,24 +25,18 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 
 	cartResult, err := rpc.CartClient.GetCart(s.ctx, &cart.GetCartReq{UserId: req.UserId, Token: req.Token})
 	if err != nil {
-		fmt.Printf("get cart failed, err:%v\n", err)
 		return nil, kerrors.NewGRPCBizStatusError(6005001, err.Error())
 	}
-	fmt.Printf("get cart succeed, cartResult : %v\n", cartResult)
 
 	if cartResult == nil || cartResult.Cart == nil {
-		fmt.Printf("cart is empty\n")
 		return nil, kerrors.NewGRPCBizStatusError(6005002, "cart is empty")
 	}
 
 	var total float32
 	var oi []*order.OrderItem
-	// TODO
-	// 应该在for循环外面进行rpc调用，否则性能不太好
 	for _, cartItem := range cartResult.Cart.Items {
 		productResp, resulterr := rpc.ProductClient.GetProduct(s.ctx, &product.GetProductReq{Id: cartItem.ProductId})
 		if resulterr != nil {
-			fmt.Printf("get product failed, err:%v\n", resulterr)
 			return nil, kerrors.NewGRPCBizStatusError(6005003, "cannot find product")
 		}
 		if productResp.Product == nil {

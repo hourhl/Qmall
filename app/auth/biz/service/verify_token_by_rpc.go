@@ -17,22 +17,15 @@ func NewVerifyTokenByRPCService(ctx context.Context) *VerifyTokenByRPCService {
 // Run create note info
 func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.VerifyResp, err error) {
 	// Finish your business logic.
-
 	tokenString := req.Token
-	fmt.Printf("tokenString : %s\n", tokenString)
-	fmt.Printf("Verify by cache\n")
 	cachedKey := fmt.Sprintf("%s_%d", "token", req.UserId)
 	cachedResult, err := redis.RedisClient.Get(s.ctx, cachedKey).Result()
 	if err != nil {
-		fmt.Printf("Fail to get token from cache\n")
 		return &auth.VerifyResp{Res: false}, err
 	}
 	if cachedResult != tokenString {
-		fmt.Printf("token not match\n")
 		return &auth.VerifyResp{Res: false}, nil
 	}
-
-	fmt.Printf("Congratulation!!!\n")
 	resp = &auth.VerifyResp{Res: true}
 	return resp, nil
 }
