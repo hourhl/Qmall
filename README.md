@@ -49,12 +49,12 @@
    ```shell
    git clone https://github.com/hourhl/Qmall.git
    ```
-* 启动consul作为服务注册中心
+* 启动项目的依赖，包括consul作为服务注册中心、Grafana作为可视化监控等
    ```shell
    cd Qmall
    docker-compose up -d
    ```
-  可以访问[consul的UI界面](http://127.0.0.1:8500/ui/dc1)来查看注册的服务
+  
 
 * 启动模块
    以user服务为例(其依赖于auth服务，故先启动auth服务)
@@ -72,32 +72,11 @@
   可以在[consul的UI界面](http://127.0.0.1:8500/ui/dc1/services)看到auth服务和user服务注册成功
 
 * 监控
-  * 通过Grafana进行可视化监控 ：localhost:3000
-  * 通过Jaeger进行可视化监控 : localhost:16686
+  * 通过consul查看注册的服务 : http://127.0.0.1:8500/ui/dc1
+  * 通过Grafana进行可视化监控 ：http://127.0.0.1:3000
+  * 通过Jaeger进行可视化监控 : http://127.0.0.1:16686
 
-
-## TODO
-
-1. 认证中心
-   * 续期身份令牌
-2. 用户服务
-   * 用户登出
-   * 删除用户
-   * 更新用户
-3. 商品服务
-   * 创建商品
-   * 修改商品信息
-   * 删除商品
-4. 购物车服务
-   * 添加购物车操作前的身份验证逻辑
-5. 订单服务
-   * 修改订单信息
-   * 订单定时取消
-5. 支付
-   * 取消支付
-   * 定时取消支付
-
-
+   
 
 ## 参考资料
 
