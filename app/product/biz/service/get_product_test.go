@@ -17,7 +17,7 @@ func TestGetProduct_Run(t *testing.T) {
 	// init req and assert value
 
 	req := &product.GetProductReq{
-		Id: 1,
+		Id: 3,
 	}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)

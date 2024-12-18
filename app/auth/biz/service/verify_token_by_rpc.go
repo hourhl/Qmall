@@ -24,11 +24,11 @@ func (s *VerifyTokenByRPCService) Run(req *auth.VerifyTokenReq) (resp *auth.Veri
 	cachedKey := fmt.Sprintf("%s_%d", "token", req.UserId)
 	cachedResult, err := redis.RedisClient.Get(s.ctx, cachedKey).Result()
 	if err != nil {
-		fmt.Sprintf("Fail to get token from cache\n")
+		fmt.Printf("Fail to get token from cache\n")
 		return &auth.VerifyResp{Res: false}, err
 	}
 	if cachedResult != tokenString {
-		fmt.Sprintf("token not match\n")
+		fmt.Printf("token not match\n")
 		return &auth.VerifyResp{Res: false}, nil
 	}
 

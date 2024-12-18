@@ -8,6 +8,7 @@ import (
 	"github.com/hourhl/Qmall/app/auth/biz/dal/redis"
 	"github.com/hourhl/Qmall/app/auth/biz/model"
 	auth "github.com/hourhl/Qmall/rpc_gen/kitex_gen/auth"
+	"github.com/joho/godotenv"
 	"os"
 	"time"
 )
@@ -36,16 +37,18 @@ func (s *DeliverTokenByRPCService) Run(req *auth.DeliverTokenReq) (resp *auth.De
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 
-	// unit test
-	//err = godotenv.Load("../../.env")
+	//unit test
+	err = godotenv.Load("../../.env")
 
 	if err != nil {
 		kerrors.NewGRPCBizStatusError(1001, "Get env error")
 		return nil, err
 	}
 	mySigningKey := []byte(os.Getenv("JWT_SECRET_KEY"))
+	fmt.Printf("mySigningKey: %v\n", mySigningKey)
 	ss, err := token.SignedString(mySigningKey)
 	resp = &auth.DeliveryResp{Token: ss}
+	fmt.Printf("token is : %v\n", resp.Token)
 
 	// Redis: Cache
 	cachedKey := fmt.Sprintf("%s_%d", "token", req.UserId)
