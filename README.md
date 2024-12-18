@@ -33,9 +33,15 @@
    * 订单结算
 7. 支付
    * 支付
-8. Prometheus - 指标
-9. OpenTelemetry - 链路追踪
-10. Redis - 缓存
+8. 缓存服务
+   * 用户登录后生成的token存储在redis中
+   * 商品查询后存储在redis中
+9. 可观测性服务
+   * Prometheus - 时间序列指标
+   * OpenTelemetry - 链路追踪
+   * Loki - 日志
+   * Grafana - 提供可视化
+
 
 ## 运行
 
@@ -49,8 +55,8 @@
    docker-compose up -d
    ```
   可以访问[consul的UI界面](http://127.0.0.1:8500/ui/dc1)来查看注册的服务
-* 启动模块
 
+* 启动模块
    以user服务为例(其依赖于auth服务，故先启动auth服务)
    ```shell
    # 启动auth服务
@@ -65,8 +71,12 @@
    ```
   可以在[consul的UI界面](http://127.0.0.1:8500/ui/dc1/services)看到auth服务和user服务注册成功
 
+* 监控
+  * 通过Grafana进行可视化监控 ：localhost:3000
+  * 通过Jaeger进行可视化监控 : localhost:16686
 
-## 完善 or 优化
+
+## TODO
 
 1. 认证中心
    * 续期身份令牌
